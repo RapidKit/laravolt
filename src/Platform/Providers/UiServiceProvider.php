@@ -56,7 +56,6 @@ class UiServiceProvider extends BaseServiceProvider
 
         if ((!$this->app->runningInConsole()) || $this->app->runningUnitTests()) {
             $this->overrideUi();
-            $this->registerIcons();
             $this->registerAssets();
         }
     }
@@ -142,24 +141,6 @@ class UiServiceProvider extends BaseServiceProvider
                 }
             );
         }
-    }
-
-    private function registerIcons()
-    {
-        $this->callAfterResolving(
-            Factory::class,
-            function (Factory $factory) {
-                $icons = [
-                    'fad' => platform_path('resources/icons/duotone'),
-                    'far' => platform_path('resources/icons/regular'),
-                    'fal' => platform_path('resources/icons/light'),
-                    'fas' => platform_path('resources/icons/solid'),
-                ];
-                foreach ($icons as $prefix => $path) {
-                    $factory->add($prefix, ['path' => $path, 'prefix' => $prefix]);
-                }
-            }
-        );
     }
 
     private function overrideUi()
